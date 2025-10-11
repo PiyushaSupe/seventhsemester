@@ -1,166 +1,429 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seventh Semester Assignments</title>
-<style>
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #f9fafb;
-        color: #222;
-        margin: 0;
-        padding: 0;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Seventh Semester — Assignments</title>
+  <style>
+    :root{
+      --bg:#fbfcfe;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent-1: linear-gradient(135deg,#7c3aed,#2563eb);
+      --accent-2: linear-gradient(135deg,#ef4444,#f97316);
+      --accent-3: linear-gradient(135deg,#0ea5a4,#06b6d4);
+      --accent-4: linear-gradient(135deg,#10b981,#06b6d4);
+      --accent-5: linear-gradient(135deg,#f59e0b,#ef4444);
+      --glass: rgba(255,255,255,0.6);
+      --radius:14px;
+      --shadow: 0 8px 30px rgba(16,24,40,0.08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-    header {
-        background: linear-gradient(90deg, #3b82f6, #9333ea);
-        color: white;
-        text-align: center;
-        padding: 30px 10px;
-        font-size: 2em;
-        font-weight: 600;
-        letter-spacing: 1px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+
+    html,body{
+      height:100%;
+      margin:0;
+      background: radial-gradient(circle at 10% 10%, #f7fbff 0%, var(--bg) 35%);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
-    .container {
-        width: 85%;
-        max-width: 1000px;
-        margin: 40px auto;
+
+    header{
+      padding:36px 20px;
+      text-align:center;
+      background: linear-gradient(90deg,#111827,#0f172a00);
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.02);
+      margin-bottom:18px;
     }
-    details {
-        background: white;
-        margin-bottom: 15px;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        transition: all 0.3s;
-        overflow: hidden;
+    header h1{
+      margin:0;
+      font-size: clamp(20px, 3.6vw, 30px);
+      letter-spacing:0.2px;
     }
-    summary {
-        padding: 18px 24px;
-        cursor: pointer;
-        font-size: 1.2em;
-        font-weight: 600;
+    header p{ margin:8px 0 0; color:var(--muted); font-size:0.95rem; }
+
+    .wrap{
+      width:95%;
+      max-width:1180px;
+      margin: 0 auto 60px;
     }
-    details[open] summary {
-        background-color: #f3f4f6;
+
+    .controls{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin: 18px 0;
+      flex-wrap:wrap;
     }
-    ul {
-        list-style: none;
-        margin: 0;
-        padding: 15px 30px 25px;
+    .search {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:var(--card);
+      padding:10px 14px;
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      min-width:260px;
+      flex:1 1 320px;
     }
-    li {
-        margin: 8px 0;
+    .search input{
+      border:0;
+      outline:0;
+      font-size:0.97rem;
+      background:transparent;
+      width:100%;
     }
-    a {
-        color: #2563eb;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.2s;
+    .buttons{
+      display:flex;
+      gap:10px;
     }
-    a:hover {
-        color: #9333ea;
-        text-decoration: underline;
+    button{
+      border:0;
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      background:linear-gradient(180deg,#fff,#f8fafc);
+      box-shadow:0 6px 18px rgba(2,6,23,0.06);
+      color:#0f172a;
     }
-    footer {
-        text-align: center;
-        font-size: 0.9em;
-        padding: 20px;
-        color: #777;
-        border-top: 1px solid #e5e7eb;
-        margin-top: 50px;
+    button.ghost{
+      background:transparent;
+      border:1px solid #e6e9ee;
     }
-</style>
+
+    /* Grid of subject cards */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+      gap:18px;
+    }
+
+    .card {
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      transition: transform .22s ease, box-shadow .22s ease;
+      display:flex;
+      flex-direction:column;
+    }
+    .card:hover{ transform: translateY(-6px); box-shadow: 0 18px 42px rgba(16,24,40,0.12); }
+
+    .card .head{
+      padding:18px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .badge{
+      min-width:56px;
+      height:56px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-weight:700;
+      font-size:0.95rem;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+    }
+    .meta{
+      flex:1;
+    }
+    .meta h3{ margin:0; font-size:1.05rem; }
+    .meta p{ margin:6px 0 0; color:var(--muted); font-size:0.9rem; }
+
+    details{
+      border-top:1px dashed #eef2f7;
+      padding:0 18px 18px;
+    }
+    summary{
+      list-style:none;
+      outline:none;
+      padding:12px 0;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      font-weight:600;
+    }
+    summary::-webkit-details-marker { display:none; } /* hide default marker */
+
+    ul.files{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    li.file{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:8px 10px;
+      border-radius:10px;
+      transition: background .12s;
+    }
+    li.file a{
+      color:#0b4dbd;
+      text-decoration:none;
+      font-weight:600;
+    }
+    li.file .tag{
+      min-width:58px;
+      text-align:center;
+      font-size:0.78rem;
+      padding:6px 8px;
+      border-radius:8px;
+      color:#fff;
+      font-weight:700;
+    }
+    li.file:hover{ background:#fbfdff; }
+
+    /* tag colors */
+    .pdf{ background: #ef4444; }
+    .doc{ background: #2563eb; }
+
+    /* Other documents card style */
+    .other { grid-column: 1/-1; }
+
+    footer{
+      margin-top:36px;
+      color:var(--muted);
+      font-size:0.9rem;
+      text-align:center;
+    }
+
+    @media (max-width:720px){
+      .controls{ gap:10px; }
+      .badge{ min-width:46px; height:46px; font-size:0.85rem; }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Seventh Semester — Assignments</h1>
+    <p>DAA · ML · BCT · OOMD · STQA — all files listed below (click to open)</p>
+  </header>
 
-<header>Seventh Semester Assignments</header>
+  <main class="wrap">
+    <div class="controls">
+      <div class="search" aria-hidden="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#94a3b8" stroke-width="1.8"/></svg>
+        <input id="filter" placeholder="Search assignments by name (e.g. ml-writeup-3)" />
+      </div>
 
-<div class="container">
+      <div class="buttons">
+        <button id="expandAll">Expand All</button>
+        <button id="collapseAll" class="ghost">Collapse All</button>
+      </div>
+    </div>
 
-    <details>
-        <summary>📘 Design and Analysis of Algorithms (DAA)</summary>
-        <ul>
-            <li><a href="DAA case study activity piyusha.pdf" target="_blank">DAA Case Study Activity</a></li>
-            <li><a href="DAA Lab manual piyusha Supe with 6.pdf" target="_blank">DAA Lab Manual</a></li>
-            <li><a href="DAA miniproject piyusha.docx.pdf" target="_blank">DAA Mini Project</a></li>
-            <li><a href="daa theory assignment piyusha .pdf" target="_blank">DAA Theory Assignment</a></li>
-        </ul>
-    </details>
+    <section class="grid">
 
-    <details>
-        <summary>🤖 Machine Learning (ML)</summary>
-        <ul>
-            <li><a href="ML Miniproject piyusha.pdf" target="_blank">ML Mini Project</a></li>
-            <li><a href="ml writeup 1.pdf" target="_blank">Writeup 1</a></li>
-            <li><a href="ml writeup 2.pdf" target="_blank">Writeup 2</a></li>
-            <li><a href="ml writeup 3.pdf" target="_blank">Writeup 3</a></li>
-            <li><a href="ml writeup 4.pdf" target="_blank">Writeup 4</a></li>
-            <li><a href="ml writeup 5.pdf" target="_blank">Writeup 5</a></li>
-            <li><a href="ml writeup 6.pdf" target="_blank">Writeup 6</a></li>
-            <li><a href="lp3-ml-practical-1.pdf" target="_blank">Practical 1</a></li>
-            <li><a href="lp3-ml-practical-2.pdf" target="_blank">Practical 2</a></li>
-            <li><a href="ml-practical-3-piyusha.pdf" target="_blank">Practical 3</a></li>
-            <li><a href="ml-practical-4-piyusha.pdf" target="_blank">Practical 4</a></li>
-            <li><a href="ml-practical-5-piyusha.pdf" target="_blank">Practical 5</a></li>
-            <li><a href="ml-practical-6-piyusha.pdf" target="_blank">Practical 6</a></li>
-        </ul>
-    </details>
+      <!-- DAA -->
+      <article class="card">
+        <div class="head">
+          <div class="badge" style="background:var(--accent-1)">DAA</div>
+          <div class="meta">
+            <h3>Design and Analysis of Algorithms</h3>
+            <p>Case studies, labs and theory assignments</p>
+          </div>
+        </div>
 
-    <details>
-        <summary>🪙 Blockchain Technology (BCT)</summary>
-        <ul>
-            <li><a href="BCT acitivity piyusha.pdf" target="_blank">BCT Activity</a></li>
-            <li><a href="BCT miniproject piyusha.pdf" target="_blank">BCT Mini Project</a></li>
-            <li><a href="BCT practicals.docx.pdf" target="_blank">BCT Practicals</a></li>
-            <li><a href="BCT theory assignment .pdf" target="_blank">BCT Theory Assignment</a></li>
-            <li><a href="bct writeup 1.pdf" target="_blank">Writeup 1</a></li>
-            <li><a href="bct writeup 2.pdf" target="_blank">Writeup 2</a></li>
-            <li><a href="bct writeup 3.pdf" target="_blank">Writeup 3</a></li>
-            <li><a href="bct writeup 4.pdf" target="_blank">Writeup 4</a></li>
-            <li><a href="bct writeup 6.pdf" target="_blank">Writeup 6</a></li>
-        </ul>
-    </details>
+        <details>
+          <summary>Assignments (click to expand)</summary>
+          <ul class="files">
+            <li class="file"><span class="tag pdf">PDF</span> <a href="daa-case-study.pdf" target="_blank" rel="noopener noreferrer">daa-case-study.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="daa-lab-manual.pdf" target="_blank" rel="noopener noreferrer">daa-lab-manual.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="daa-miniproject.pdf" target="_blank" rel="noopener noreferrer">daa-miniproject.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="daa-theory-assignment.pdf" target="_blank" rel="noopener noreferrer">daa-theory-assignment.pdf</a></li>
+          </ul>
+        </details>
+      </article>
 
-    <details>
-        <summary>🧩 Object Oriented Modeling and Design (OOMD)</summary>
-        <ul>
-            <li><a href="oomd miniproject.pdf" target="_blank">Mini Project</a></li>
-            <li><a href="oomd theory assignment piyusha .pdf" target="_blank">Theory Assignment</a></li>
-            <li><a href="oomd pract 1.pdf" target="_blank">Practical 1</a></li>
-            <li><a href="oomd pract 2.pdf" target="_blank">Practical 2</a></li>
-            <li><a href="oomd pract 3 USE CASE DIAGRAM.drawio.pdf" target="_blank">Practical 3</a></li>
-            <li><a href="oomd pract 4.pdf" target="_blank">Practical 4</a></li>
-            <li><a href="oomd pract 5.pdf" target="_blank">Practical 5</a></li>
-            <li><a href="writeup oomd 1 .pdf" target="_blank">Writeup 1</a></li>
-            <li><a href="writeup oomd 2.pdf" target="_blank">Writeup 2</a></li>
-            <li><a href="writeup oomd 3.pdf" target="_blank">Writeup 3</a></li>
-            <li><a href="writeup oomd 4.pdf" target="_blank">Writeup 4</a></li>
-            <li><a href="writeup oomd 5.pdf" target="_blank">Writeup 5</a></li>
-        </ul>
-    </details>
+      <!-- ML -->
+      <article class="card">
+        <div class="head">
+          <div class="badge" style="background:var(--accent-2)">ML</div>
+          <div class="meta">
+            <h3>Machine Learning</h3>
+            <p>Output files, writeups and mini project</p>
+          </div>
+        </div>
 
-    <details>
-        <summary>🧪 Software Testing and Quality Assurance (STQA)</summary>
-        <ul>
-            <li><a href="STQA FINAL MINIPROJECT.pdf" target="_blank">Final Mini Project</a></li>
-            <li><a href="STQA theory assignment .pdf" target="_blank">Theory Assignment</a></li>
-            <li><a href="stqa 1.pdf" target="_blank">STQA 1</a></li>
-            <li><a href="stqa 2.pdf" target="_blank">STQA 2</a></li>
-            <li><a href="stqa 3.pdf" target="_blank">STQA 3</a></li>
-            <li><a href="stqa 4.pdf" target="_blank">STQA 4</a></li>
-            <li><a href="stqa 5.pdf" target="_blank">STQA 5</a></li>
-            <li><a href="writeup stqa 1.pdf" target="_blank">Writeup 1</a></li>
-            <li><a href="writeup stqa 2.pdf" target="_blank">Writeup 2</a></li>
-            <li><a href="writeup stqa 3.pdf" target="_blank">Writeup 3</a></li>
-            <li><a href="writeup stqa 4.pdf" target="_blank">Writeup 4</a></li>
-            <li><a href="writeup stqa 5.pdf" target="_blank">Writeup 5</a></li>
-        </ul>
-    </details>
+        <details>
+          <summary>Assignments and outputs</summary>
+          <ul class="files">
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-miniproject.pdf" target="_blank" rel="noopener noreferrer">ml-miniproject.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-output-1.pdf" target="_blank" rel="noopener noreferrer">ml-output-1.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-output-2.pdf" target="_blank" rel="noopener noreferrer">ml-output-2.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-output-3.pdf" target="_blank" rel="noopener noreferrer">ml-output-3.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-output-4.pdf" target="_blank" rel="noopener noreferrer">ml-output-4.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-output-5.pdf" target="_blank" rel="noopener noreferrer">ml-output-5.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-output-6.pdf" target="_blank" rel="noopener noreferrer">ml-output-6.pdf</a></li>
 
-</div>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-writeup-1.pdf" target="_blank" rel="noopener noreferrer">ml-writeup-1.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-writeup-2.pdf" target="_blank" rel="noopener noreferrer">ml-writeup-2.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-writeup-3.pdf" target="_blank" rel="noopener noreferrer">ml-writeup-3.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-writeup-4.pdf" target="_blank" rel="noopener noreferrer">ml-writeup-4.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-writeup-5.pdf" target="_blank" rel="noopener noreferrer">ml-writeup-5.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="ml-writeup-6.pdf" target="_blank" rel="noopener noreferrer">ml-writeup-6.pdf</a></li>
+          </ul>
+        </details>
+      </article>
 
-<footer>© 2025 Seventh Semester | Piyusha Supe</footer>
+      <!-- BCT -->
+      <article class="card">
+        <div class="head">
+          <div class="badge" style="background:var(--accent-3)">BCT</div>
+          <div class="meta">
+            <h3>Blockchain Technology</h3>
+            <p>Activity, practicals, theory and writeups</p>
+          </div>
+        </div>
 
+        <details>
+          <summary>Assignments and practicals</summary>
+          <ul class="files">
+            <li class="file"><span class="tag pdf">PDF</span> <a href="bct-activity.pdf" target="_blank" rel="noopener noreferrer">bct-activity.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="bct-miniproject.pdf" target="_blank" rel="noopener noreferrer">bct-miniproject.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="bct-practicals.pdf" target="_blank" rel="noopener noreferrer">bct-practicals.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="bct-theory-assignment.pdf" target="_blank" rel="noopener noreferrer">bct-theory-assignment.pdf</a></li>
+
+            <li class="file"><span class="tag pdf">PDF</span> <a href="bct-writeup-1.pdf" target="_blank" rel="noopener noreferrer">bct-writeup-1.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="bct-writeup-2.pdf" target="_blank" rel="noopener noreferrer">bct-writeup-2.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="bct-writeup-3.pdf" target="_blank" rel="noopener noreferrer">bct-writeup-3.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="bct-writeup-4.pdf" target="_blank" rel="noopener noreferrer">bct-writeup-4.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="bct-writeup-6.pdf" target="_blank" rel="noopener noreferrer">bct-writeup-6.pdf</a></li>
+          </ul>
+        </details>
+      </article>
+
+      <!-- OOMD -->
+      <article class="card">
+        <div class="head">
+          <div class="badge" style="background:var(--accent-4)">OOMD</div>
+          <div class="meta">
+            <h3>Object Oriented Modeling and Design</h3>
+            <p>Outputs, writeups and mini project</p>
+          </div>
+        </div>
+
+        <details>
+          <summary>Assignments and outputs</summary>
+          <ul class="files">
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-output-1.pdf" target="_blank" rel="noopener noreferrer">oomd-output-1.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-output-2.pdf" target="_blank" rel="noopener noreferrer">oomd-output-2.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-output-3.pdf" target="_blank" rel="noopener noreferrer">oomd-output-3.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-output-4.pdf" target="_blank" rel="noopener noreferrer">oomd-output-4.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-output-5.pdf" target="_blank" rel="noopener noreferrer">oomd-output-5.pdf</a></li>
+
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-miniproject.pdf" target="_blank" rel="noopener noreferrer">oomd-miniproject.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-theory-assignment.pdf" target="_blank" rel="noopener noreferrer">oomd-theory-assignment.pdf</a></li>
+
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-writeup-1.pdf" target="_blank" rel="noopener noreferrer">oomd-writeup-1.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-writeup-2.pdf" target="_blank" rel="noopener noreferrer">oomd-writeup-2.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-writeup-3.pdf" target="_blank" rel="noopener noreferrer">oomd-writeup-3.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-writeup-4.pdf" target="_blank" rel="noopener noreferrer">oomd-writeup-4.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="oomd-writeup-5.pdf" target="_blank" rel="noopener noreferrer">oomd-writeup-5.pdf</a></li>
+          </ul>
+        </details>
+      </article>
+
+      <!-- STQA -->
+      <article class="card">
+        <div class="head">
+          <div class="badge" style="background:var(--accent-5)">STQA</div>
+          <div class="meta">
+            <h3>Software Testing and Quality Assurance</h3>
+            <p>Writeups, outputs and mini project</p>
+          </div>
+        </div>
+
+        <details>
+          <summary>Assignments and outputs</summary>
+          <ul class="files">
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-theory-assignment.pdf" target="_blank" rel="noopener noreferrer">stqa-theory-assignment.pdf</a></li>
+
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-writeup-1.pdf" target="_blank" rel="noopener noreferrer">stqa-writeup-1.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-writeup-2.pdf" target="_blank" rel="noopener noreferrer">stqa-writeup-2.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-writeup-3.pdf" target="_blank" rel="noopener noreferrer">stqa-writeup-3.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-writeup-4.pdf" target="_blank" rel="noopener noreferrer">stqa-writeup-4.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-writeup-5.pdf" target="_blank" rel="noopener noreferrer">stqa-writeup-5.pdf</a></li>
+
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-miniproject.pdf" target="_blank" rel="noopener noreferrer">stqa-miniproject.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-output-1.pdf" target="_blank" rel="noopener noreferrer">stqa-output-1.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-output-2.pdf" target="_blank" rel="noopener noreferrer">stqa-output-2.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-output-3.pdf" target="_blank" rel="noopener noreferrer">stqa-output-3.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-output-4.pdf" target="_blank" rel="noopener noreferrer">stqa-output-4.pdf</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="stqa-output-5.pdf" target="_blank" rel="noopener noreferrer">stqa-output-5.pdf</a></li>
+          </ul>
+        </details>
+      </article>
+
+      <!-- Other necessary documents: full width -->
+      <article class="card other">
+        <div class="head">
+          <div class="badge" style="background:linear-gradient(135deg,#64748b,#0ea5a4)">DOCS</div>
+          <div class="meta">
+            <h3>Other necessary documents</h3>
+            <p>Indexes and certificate</p>
+          </div>
+        </div>
+
+        <details open>
+          <summary>Open documents</summary>
+          <ul class="files">
+            <li class="file"><span class="tag pdf">PDF</span> <a href="file-indexes-pdf.pdf" target="_blank" rel="noopener noreferrer">file-indexes-pdf.pdf</a></li>
+            <li class="file"><span class="tag doc">DOC</span> <a href="file-indexes-word.docx" target="_blank" rel="noopener noreferrer">file-indexes-word.docx</a></li>
+            <li class="file"><span class="tag pdf">PDF</span> <a href="coe-certificate.pdf" target="_blank" rel="noopener noreferrer">coe-certificate.pdf</a></li>
+          </ul>
+        </details>
+      </article>
+
+    </section>
+
+    <footer>© 2025 Seventh Semester • Designed for Piyusha Supe</footer>
+  </main>
+
+  <script>
+    // Expand/collapse controls
+    const expandAll = document.getElementById('expandAll');
+    const collapseAll = document.getElementById('collapseAll');
+    const detailsEls = Array.from(document.querySelectorAll('details'));
+
+    expandAll.addEventListener('click', () => detailsEls.forEach(d => d.open = true));
+    collapseAll.addEventListener('click', () => detailsEls.forEach(d => d.open = false));
+
+    // Filter/search
+    const filterInput = document.getElementById('filter');
+    filterInput.addEventListener('input', () => {
+      const q = filterInput.value.trim().toLowerCase();
+      const files = document.querySelectorAll('.file');
+      files.forEach(li => {
+        const text = li.innerText.toLowerCase();
+        li.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+      // hide details if no visible children
+      detailsEls.forEach(d => {
+        const anyVisible = Array.from(d.querySelectorAll('.file')).some(li => li.style.display !== 'none');
+        d.style.display = anyVisible ? '' : 'none';
+      });
+    });
+
+    // On page load keep all details visible only if they contain files
+    window.addEventListener('load', () => {
+      detailsEls.forEach(d => {
+        const files = d.querySelectorAll('.file');
+        d.open = false;
+        if (!files.length) d.style.display = 'none';
+      });
+    });
+  </script>
 </body>
 </html>
